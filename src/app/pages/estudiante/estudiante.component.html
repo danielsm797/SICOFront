@@ -1,0 +1,62 @@
+<h1 class="txt-left">Estudiantes</h1>
+<button mat-raised-button>
+  Add data
+</button>
+
+<table mat-table [dataSource]="estudiantes">
+
+  <ng-container matColumnDef="strIdentificacion">
+    <th mat-header-cell *matHeaderCellDef>Identificación</th>
+    <td mat-cell *matCellDef="let element">
+      {{element.strIdentificacion}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="strPrimerNombre">
+    <th mat-header-cell *matHeaderCellDef>Primer nombre</th>
+    <td mat-cell *matCellDef="let element">
+      {{element.strPrimerNombre}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="strSegundoNombre">
+    <th mat-header-cell *matHeaderCellDef>Segundo nombre</th>
+    <td mat-cell *matCellDef="let element">
+      {{element.strSegundoNombre}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="strPrimerApellido">
+    <th mat-header-cell *matHeaderCellDef>Primer apellido</th>
+    <td mat-cell *matCellDef="let element">
+      {{element.strPrimerApellido}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="strSegundoApellido">
+    <th mat-header-cell *matHeaderCellDef>Segundo apellido</th>
+    <td mat-cell *matCellDef="let element">
+      {{element.strSegundoApellido}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="dtmFechaCreacion">
+    <th mat-header-cell *matHeaderCellDef>Fecha creación</th>
+    <td mat-cell *matCellDef="let element">
+      {{element.dtmFechaCreacion | date: 'yyyy/LL/dd HH:mm'}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="accion">
+    <th mat-header-cell *matHeaderCellDef>Acción</th>
+    <td mat-cell *matCellDef="let element">
+      <button type="button" mat-raised-button (click)="verCursos(element)">
+        Ver cursos
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table>

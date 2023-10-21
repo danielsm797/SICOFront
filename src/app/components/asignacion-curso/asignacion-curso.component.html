@@ -1,0 +1,70 @@
+<h1 mat-dialog-title>
+  Cursos del estudiante {{nombreEstudiante}}
+</h1>
+
+<div mat-dialog-content>
+
+  <form [formGroup]="frm">
+
+    <mat-form-field>
+      <mat-label>Curso</mat-label>
+      <mat-select formControlName="curso">
+        <mat-option *ngFor="let k of cursosDisponibles" [value]="k">
+          {{k.strNombre}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button type="button" [disabled]="frm.invalid" mat-button (click)="guardar()">
+      Guardar
+    </button>
+
+  </form>
+
+  <div *ngIf="cursosAsignados.length">
+
+    <table mat-table [dataSource]="cursosAsignados">
+
+      <ng-container matColumnDef="strNombre">
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let element">
+          {{element.strNombre}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="dtmFechaCreacion">
+        <th mat-header-cell *matHeaderCellDef>Fecha creación</th>
+        <td mat-cell *matCellDef="let element">
+          {{element.dtmFechaCreacion}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="accion">
+        <th mat-header-cell *matHeaderCellDef>Acción</th>
+        <td mat-cell *matCellDef="let element; let index">
+          <button type="button" mat-raised-button (click)="eliminar(element)">
+            Eliminar
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+
+  </div>
+
+  <div *ngIf="!cursosAsignados.length">
+    <h2>
+      No se han encontrado cursos asignados.
+    </h2>
+  </div>
+
+</div>
+
+<div mat-dialog-actions align="end">
+  <button type="button" mat-button (click)="cerrar()">
+    Cerrar
+  </button>
+</div>
