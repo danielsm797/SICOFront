@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { DateTime } from 'luxon';
 import { AsignacionCursoComponent } from 'src/app/components/asignacion-curso/asignacion-curso.component';
 import { ApiService } from 'src/app/services/api.service';
+import { message } from 'src/app/utils/message';
 import { Estudiante } from 'src/app/utils/types';
 
 @Component({
@@ -12,6 +14,8 @@ import { Estudiante } from 'src/app/utils/types';
 export class EstudianteComponent implements OnInit {
 
   //#region Properties
+
+  filtro = ''
 
   estudiantes: Estudiante[] = []
 
@@ -35,22 +39,33 @@ export class EstudianteComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.#init()
+    this.consultarEstudiantes()
   }
 
   //#endregion
 
   //#region Methods
 
-  #init() {
+  consultarEstudiantes() {
 
     this.estudiantes = []
 
     this.api
       .getEstudiantes()
-      .then((val: Estudiante[]) => this.estudiantes = val)
+      .then((val: Estudiante[]) => {
+
+        val.forEach(x => x.dtmFechaCreacion = DateTime
+          .fromISO(x.dtmFechaCreacion)
+          .toFormat('yyyy/LL/dd HH:mm'))
+
+        this.estudiantes = val
+      })
       .catch(err => {
-        debugger
+        message(
+          'Estudiantes',
+          '¡Ha ocurrido un error consultando los estudiantes!',
+          false
+        )
       })
   }
 

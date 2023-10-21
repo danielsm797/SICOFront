@@ -5,7 +5,8 @@ export type Estudiante = {
   strPrimerApellido: string,
   strPrimerNombre: string,
   strSegundoApellido: string,
-  strSegundoNombre?: string
+  strSegundoNombre?: string,
+  strEmail?: string
 }
 
 export type Curso = {

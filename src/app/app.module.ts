@@ -10,6 +10,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table'
 import { MatDialogModule } from '@angular/material/dialog'
 import { ComponentsModule } from './components/components.module';
+import { PipesModule } from './pipes/pipes.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,10 @@ import { ComponentsModule } from './components/components.module';
     BrowserAnimationsModule,
     MatTableModule,
     MatDialogModule,
-    ComponentsModule
+    ComponentsModule,
+    PipesModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

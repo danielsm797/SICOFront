@@ -1,70 +1,90 @@
-<h1 mat-dialog-title>
-  Cursos del estudiante {{nombreEstudiante}}
-</h1>
+<div class="bg-gray-900">
 
-<div mat-dialog-content>
+  <header class="bg-gray-800 border-b-2 border-gray-700 p-5">
 
-  <form [formGroup]="frm">
+    <h1 class="font-light text-xl text-white">
+      Cursos del estudiante <strong>{{nombreEstudiante}}</strong>
+    </h1>
 
-    <mat-form-field>
-      <mat-label>Curso</mat-label>
-      <mat-select formControlName="curso">
-        <mat-option *ngFor="let k of cursosDisponibles" [value]="k">
-          {{k.strNombre}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+  </header>
 
-    <button type="button" [disabled]="frm.invalid" mat-button (click)="guardar()">
-      Guardar
+  <div class="p-5">
+
+    <form class="grid grid-cols-2 gap-3" [formGroup]="frm">
+
+      <mat-form-field>
+        <mat-label>Curso</mat-label>
+        <mat-select formControlName="curso">
+          <mat-option *ngFor="let k of cursosDisponibles" [value]="k">
+            {{k.strNombre}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button
+        class="rounded-md bg-violet-800 px-3 py-2 text-[0.8125rem] font-semibold text-white border-2 border-violet-800 hover:border-violet-300 hover:bg-violet-900 h-10"
+        type="button" [disabled]="frm.invalid" mat-button (click)="guardar()">
+        Guardar
+      </button>
+
+    </form>
+
+    <div *ngIf="cursosAsignados.length">
+
+      <table class="w-full bg-gray-700 rounded-xl shadow-2xl">
+
+        <thead>
+          <tr class="h-14 bg-gray-800">
+            <th class="text-white font-medium rounded-tl-xl">Nombre</th>
+            <th class="text-white font-medium">Fecha creación</th>
+            <th class="rounded-tr-xl"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let k of cursosAsignados">
+
+            <td class="text-gray-300 p-3 border-b-2 border-dashed text-center border-gray-800">
+              {{k.strNombre}}
+            </td>
+
+            <td class="text-gray-300 p-3 border-b-2 border-dashed text-center border-gray-800">
+              {{k.dtmFechaCreacion}}
+            </td>
+
+            <td class="border-b-2 border-dashed border-gray-800 p-3">
+
+              <button type="button"
+                class="rounded-md bg-red-900 px-3 py-2 text-[0.8125rem] font-semibold text-white border-2 border-red-900 hover:border-red-300  hover:bg-red-950 w-full"
+                (click)="prevEliminar(k)">
+                Eliminar
+              </button>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+    <div class="flex flex-row items-center justify-center" *ngIf="!cursosAsignados.length">
+      <h2 class="text-xl text-violet-300">
+        No se han encontrado cursos asignados.
+      </h2>
+    </div>
+
+  </div>
+
+  <footer class="flex flex-row-reverse p-5">
+
+    <button type="button" (click)="cerrar()"
+      class="bg-gray-800 rounded-md bg-gr-800 px-3 py-2 text-[0.8125rem] font-semibold text-white border-2 border-gray-800 hover:border-violet-300 hover:bg-violet-900">
+      Cerrar
     </button>
 
-  </form>
+  </footer>
 
-  <div *ngIf="cursosAsignados.length">
-
-    <table mat-table [dataSource]="cursosAsignados">
-
-      <ng-container matColumnDef="strNombre">
-        <th mat-header-cell *matHeaderCellDef>Nombre</th>
-        <td mat-cell *matCellDef="let element">
-          {{element.strNombre}}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="dtmFechaCreacion">
-        <th mat-header-cell *matHeaderCellDef>Fecha creación</th>
-        <td mat-cell *matCellDef="let element">
-          {{element.dtmFechaCreacion}}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="accion">
-        <th mat-header-cell *matHeaderCellDef>Acción</th>
-        <td mat-cell *matCellDef="let element; let index">
-          <button type="button" mat-raised-button (click)="eliminar(element)">
-            Eliminar
-          </button>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-    </table>
-
-  </div>
-
-  <div *ngIf="!cursosAsignados.length">
-    <h2>
-      No se han encontrado cursos asignados.
-    </h2>
-  </div>
-
-</div>
-
-<div mat-dialog-actions align="end">
-  <button type="button" mat-button (click)="cerrar()">
-    Cerrar
-  </button>
 </div>

@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
 import { Curso, DataDialogAsignacionCurso, PostAsignarCurso } from 'src/app/utils/types';
 import { DateTime } from 'luxon'
+import { message, question } from 'src/app/utils/message';
 
 @Component({
   selector: 'app-asignacion-curso',
@@ -57,7 +58,7 @@ export class AsignacionCursoComponent implements OnInit {
   #buildForm() {
 
     this.frm = new FormGroup({
-      curso: new FormControl('', [Validators.required])
+      curso: new FormControl(null, [Validators.required])
     })
   }
 
@@ -76,7 +77,11 @@ export class AsignacionCursoComponent implements OnInit {
         this.cursosAsignados = val
       })
       .catch(err => {
-        console.log('err :>> ', err);
+        message(
+          'Cursos asignados',
+          '¡Ha ocurrido un error consultando los cursos asignados!',
+          false
+        )
       })
   }
 
@@ -95,21 +100,45 @@ export class AsignacionCursoComponent implements OnInit {
         }
       })
       .catch(err => {
-        console.log('err :>> ', err);
+        message(
+          'Cursos disponibles',
+          '¡Ha ocurrido un error consultando los cursos disponibles!',
+          false
+        )
       })
   }
 
-  eliminar(curso: Curso) {
+  async prevEliminar(curso: Curso) {
+
+    const value = await question(
+      'Desvincular curso',
+      `¿Está seguro de desvincular el curso "${curso.strNombre}"?`
+    )
+
+    if (!value) return
+
+    this.#eliminar(curso)
+  }
+
+  #eliminar(curso: Curso) {
 
     this.apiService
       .deleteCursoXEstudiante(curso.idCursoXEstudiante)
       .then(val => {
 
-        if (!val) {
+        const isOk = val > 0
+
+        message(
+          'Desvincular curso',
+          isOk
+            ? `¡El curso "${curso.strNombre}" se ha desvinculado exitosamente!`
+            : '¡Ha ocurrido un error desvinculando el curso!',
+          isOk
+        )
+
+        if (!isOk) {
           return
         }
-
-        // TODO: Mostrar mensaje de confirmación
 
         this.cursosDisponibles.push(curso)
 
@@ -122,11 +151,16 @@ export class AsignacionCursoComponent implements OnInit {
         this.#eliminarCursoAsignado(curso.idCursoXEstudiante)
       })
       .catch(err => {
-        console.log('err :>> ', err);
+        message('Asignar curso', '¡Ha ocurrido un error desvinculando el curso!', false)
       })
   }
 
   guardar() {
+
+    if (this.frm.invalid) {
+      this.frm.markAllAsTouched()
+      return
+    }
 
     const body: PostAsignarCurso = {
       idCurso: this.cursoSelected.value.idCurso,
@@ -137,8 +171,17 @@ export class AsignacionCursoComponent implements OnInit {
       .postAsignarCurso(body)
       .then(val => {
 
-        if (!val) {
-          // TODO: Mostrar mensaje
+        const isOk = val > 0
+
+        message(
+          'Asignar curso',
+          isOk
+            ? `¡El curso "${this.cursoSelected.value.strNombre}" se ha asignado exitosamente!`
+            : '¡Ha ocurrido un error asignando el curso!',
+          isOk
+        )
+
+        if (!isOk) {
           return
         }
 
@@ -154,7 +197,7 @@ export class AsignacionCursoComponent implements OnInit {
         this.frm.reset()
       })
       .catch(err => {
-        console.log('err :>> ', err);
+        message('Asignar curso', '¡Ha ocurrido un error asignando el curso!', false)
       })
   }
 

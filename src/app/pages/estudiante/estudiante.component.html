@@ -1,62 +1,131 @@
-<h1 class="txt-left">Estudiantes</h1>
-<button mat-raised-button>
-  Add data
-</button>
+<div class="grid mb-10 sm:grid-cols-1 md:grid-cols-2">
 
-<table mat-table [dataSource]="estudiantes">
+  <h1 class="text-white text-4xl">
+    Estudiantes
+  </h1>
 
-  <ng-container matColumnDef="strIdentificacion">
-    <th mat-header-cell *matHeaderCellDef>Identificación</th>
-    <td mat-cell *matCellDef="let element">
-      {{element.strIdentificacion}}
-    </td>
-  </ng-container>
+  <div class="flex sm:flex-col md:flex-row-reverse gap-2">
 
-  <ng-container matColumnDef="strPrimerNombre">
-    <th mat-header-cell *matHeaderCellDef>Primer nombre</th>
-    <td mat-cell *matCellDef="let element">
-      {{element.strPrimerNombre}}
-    </td>
-  </ng-container>
+    <button type="button" (click)="consultarEstudiantes()"
+      class="rounded-md bg-violet-800 px-3 py-2 text-[0.8125rem] font-semibold text-white border-2 border-violet-800 hover:border-violet-300 hover:bg-violet-900">
+      Refrescar
+    </button>
 
-  <ng-container matColumnDef="strSegundoNombre">
-    <th mat-header-cell *matHeaderCellDef>Segundo nombre</th>
-    <td mat-cell *matCellDef="let element">
-      {{element.strSegundoNombre}}
-    </td>
-  </ng-container>
+    <button type="button"
+      class="rounded-md bg-violet-800 px-3 py-2 text-[0.8125rem] font-semibold text-white border-2 border-violet-800 hover:border-violet-300  hover:bg-violet-900">
+      Nuevo
+    </button>
 
-  <ng-container matColumnDef="strPrimerApellido">
-    <th mat-header-cell *matHeaderCellDef>Primer apellido</th>
-    <td mat-cell *matCellDef="let element">
-      {{element.strPrimerApellido}}
-    </td>
-  </ng-container>
+  </div>
 
-  <ng-container matColumnDef="strSegundoApellido">
-    <th mat-header-cell *matHeaderCellDef>Segundo apellido</th>
-    <td mat-cell *matCellDef="let element">
-      {{element.strSegundoApellido}}
-    </td>
-  </ng-container>
+</div>
 
-  <ng-container matColumnDef="dtmFechaCreacion">
-    <th mat-header-cell *matHeaderCellDef>Fecha creación</th>
-    <td mat-cell *matCellDef="let element">
-      {{element.dtmFechaCreacion | date: 'yyyy/LL/dd HH:mm'}}
-    </td>
-  </ng-container>
+<div *ngIf="estudiantes.length">
 
-  <ng-container matColumnDef="accion">
-    <th mat-header-cell *matHeaderCellDef>Acción</th>
-    <td mat-cell *matCellDef="let element">
-      <button type="button" mat-raised-button (click)="verCursos(element)">
-        Ver cursos
-      </button>
-    </td>
-  </ng-container>
+  <input type="text" placeholder="Eje: 18849494" [(ngModel)]="filtro"
+    class="bg-transparent text-white rounded-md border-2 border-gray-600 py-1 px-2 hover:border-violet-400 w-80" />
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <table class="w-full bg-gray-700 rounded-xl shadow-2xl mt-5">
 
-</table>
+    <thead>
+      <tr class="h-14 bg-gray-800">
+
+        <th class="text-white font-medium rounded-tl-xl">
+          Identificación
+        </th>
+
+        <th class="text-white font-medium">
+          Primer nombre
+        </th>
+
+        <th class="text-white font-medium">
+          Segundo nombre
+        </th>
+
+        <th class="text-white font-medium">
+          Primer apellido
+        </th>
+
+        <th class="text-white font-medium">
+          Segundo apellido
+        </th>
+
+        <th class="text-white font-medium">
+          Email
+        </th>
+
+        <th class="text-white font-medium">
+          Fecha creación
+        </th>
+
+        <th class="rounded-tr-xl"></th>
+
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <tr
+        *ngFor="let k of estudiantes | filtro: filtro: 'strIdentificacion': 'strPrimerNombre': 'strSegundoNombre': 'strPrimerApellido': 'strSegundoApellido': 'strEmail'">
+
+        <td class="text-gray-300 p-3 border-b-2 border-dashed text-center border-gray-800">
+          {{k.strIdentificacion}}
+        </td>
+
+        <td class="text-gray-300 p-3 border-b-2 border-dashed text-center border-gray-800">
+          {{k.strPrimerNombre}}
+        </td>
+
+        <td class="text-gray-300 p-3 border-b-2 border-dashed text-center border-gray-800">
+          {{k.strSegundoNombre}}
+        </td>
+
+        <td class="text-gray-300 p-3 border-b-2 border-dashed text-center border-gray-800">
+          {{k.strPrimerApellido}}
+        </td>
+
+        <td class="text-gray-300 p-3 border-b-2 border-dashed text-center border-gray-800">
+          {{k.strSegundoApellido}}
+        </td>
+
+        <td class="text-gray-300 p-3 border-b-2 border-dashed text-center border-gray-800">
+          {{k.strEmail}}
+        </td>
+
+        <td class="text-gray-300 p-3 border-b-2 border-dashed text-center border-gray-800">
+          {{k.dtmFechaCreacion}}
+        </td>
+
+        <td class="border-b-2 border-dashed border-gray-800 p-3">
+
+          <div class="flex flex-row- gap-4">
+
+            <button type="button"
+              class="rounded-md bg-gray-800 px-3 py-2 text-[0.8125rem] font-semibold text-white border-2 border-gray-800 hover:border-violet-300  hover:bg-violet-900 w-full"
+              (click)="verCursos(k)">
+              Ver cursos
+            </button>
+
+            <button type="button"
+              class="rounded-md bg-red-900 px-3 py-2 text-[0.8125rem] font-semibold text-white border-2 border-red-900 hover:border-red-300  hover:bg-red-950 w-full"
+              (click)="verCursos(k)">
+              Eliminar
+            </button>
+
+          </div>
+
+        </td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+</div>
+
+<div class="flex flex-row justify-center items-center" *ngIf="!estudiantes.length">
+  <h2 class="text-3xl text-violet-300">
+    No se han encontrado estudiantes registrados
+  </h2>
+</div>
