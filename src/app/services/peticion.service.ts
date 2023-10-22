@@ -31,6 +31,9 @@ export class PeticionService {
       case HttpMethods.POST:
         promise = firstValueFrom(this.http.post(url, body, { headers }))
         break
+      case HttpMethods.PUT:
+        promise = firstValueFrom(this.http.put(url, body, { headers }))
+        break
     }
 
     return promise

@@ -11,7 +11,7 @@
       Refrescar
     </button>
 
-    <button type="button"
+    <button type="button" (click)="nuevoEstudiante()"
       class="rounded-md bg-violet-800 px-3 py-2 text-[0.8125rem] font-semibold text-white border-2 border-violet-800 hover:border-violet-300  hover:bg-violet-900">
       Nuevo
     </button>
@@ -65,8 +65,7 @@
 
     <tbody>
 
-      <tr
-        *ngFor="let k of estudiantes | filtro: filtro: 'strIdentificacion': 'strPrimerNombre': 'strSegundoNombre': 'strPrimerApellido': 'strSegundoApellido': 'strEmail'">
+      <tr *ngFor="let k of estudiantes | filtro: filtro; let i = index">
 
         <td class="text-gray-300 p-3 border-b-2 border-dashed text-center border-gray-800">
           {{k.strIdentificacion}}
@@ -103,13 +102,19 @@
             <button type="button"
               class="rounded-md bg-gray-800 px-3 py-2 text-[0.8125rem] font-semibold text-white border-2 border-gray-800 hover:border-violet-300  hover:bg-violet-900 w-full"
               (click)="verCursos(k)">
-              Ver cursos
+              Cursos
             </button>
 
             <button type="button"
               class="rounded-md bg-red-900 px-3 py-2 text-[0.8125rem] font-semibold text-white border-2 border-red-900 hover:border-red-300  hover:bg-red-950 w-full"
-              (click)="verCursos(k)">
+              (click)="prevEliminarEstudiante(k, i)">
               Eliminar
+            </button>
+
+            <button type="button"
+              class="rounded-md bg-gray-800 px-3 py-2 text-[0.8125rem] font-semibold text-white border-2 border-gray-800 hover:border-violet-300  hover:bg-violet-900 w-full"
+              (click)="editar(k, i)">
+              Editar
             </button>
 
           </div>

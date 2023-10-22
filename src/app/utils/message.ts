@@ -10,7 +10,7 @@ export const message = (title: string, text: string, success: boolean) => {
   })
 }
 
-export const question = async (title: string, text: string,) => {
+export const question = async (title: string, text = '¿Está seguro de realizar esta acción?') => {
 
   const result = await Swal.fire({
     title,

@@ -5,5 +5,8 @@ export const environment = {
   getCursosXEstudiante: `${host}/api/estudiante/`,
   getCursosDisponiblesXEstudiante: `${host}/api/curso/`,
   postAsignarCurso: `${host}/api/cursoXEstudiante`,
-  deleteCursoXEstudiante: `${host}/api/cursoXEstudiante/`
+  postRegistrarEmpleado: `${host}/api/estudiante`,
+  deleteCursoXEstudiante: `${host}/api/cursoXEstudiante/`,
+  deleteEstudiante: `${host}/api/estudiante/`,
+  putEstudiante: `${host}/api/estudiante/`
 };

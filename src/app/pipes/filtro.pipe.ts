@@ -6,15 +6,18 @@ import { Estudiante } from '../utils/types'
 })
 export class FiltroPipe implements PipeTransform {
 
-  transform(arreglo: any[], texto: string, ...campos: any): any[] {
+  transform(arreglo: any[], texto: string): any[] {
 
-    if (texto === String()) { return arreglo }
+    if (!texto) return arreglo
 
     texto = texto.toLowerCase()
 
     const result: Estudiante[] = []
 
-    campos.forEach((element: string) => {
+    const keys = Object.keys(arreglo[0])
+    keys.shift()
+
+    keys.forEach((element: string) => {
 
       const filtro: Estudiante[] = arreglo
         .filter(x => x[element] && x[element].toLowerCase().includes(texto.toLowerCase()))

@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DateTime } from 'luxon';
 import { AsignacionCursoComponent } from 'src/app/components/asignacion-curso/asignacion-curso.component';
+import { FormularioEstudianteComponent } from 'src/app/components/formulario-estudiante/formulario-estudiante.component';
 import { ApiService } from 'src/app/services/api.service';
-import { message } from 'src/app/utils/message';
+import { message, question } from 'src/app/utils/message';
 import { Estudiante } from 'src/app/utils/types';
 
 @Component({
@@ -73,18 +74,91 @@ export class EstudianteComponent implements OnInit {
 
     const { idEstudiante, strPrimerNombre, strPrimerApellido } = estudiante
 
-    const dialogRef = this.dialog
+    this.dialog
       .open(AsignacionCursoComponent, {
         data: {
           id: idEstudiante,
           nombre: `${strPrimerNombre} ${strPrimerApellido}`
         }
       })
+  }
+
+  nuevoEstudiante() {
+
+    const dialogRef = this.dialog
+      .open(FormularioEstudianteComponent, {
+        width: '50%',
+        height: 'auto'
+      })
 
     dialogRef
       .afterClosed()
       .subscribe(subs => {
 
+        if (!subs) {
+          return
+        }
+
+        this.estudiantes.push(subs)
+      })
+  }
+
+  async prevEliminarEstudiante(estudiante: Estudiante, indice: number) {
+
+    const isOk = await question(
+      'Eliminar estudiante',
+      `¿Está seguro de eliminar el estudiante: ${estudiante.strPrimerNombre} ${estudiante.strPrimerApellido}?`
+    )
+
+    if (!isOk) return
+
+    this.#eliminarEstudiante(estudiante.idEstudiante, indice)
+  }
+
+  #eliminarEstudiante(id: number, indice: number) {
+
+    this.api
+      .deleteEstudiante(id)
+      .then(() => {
+
+        message(
+          'Eliminar estudiante',
+          '¡Estudiante eliminado exitosamente!',
+          true
+        )
+
+        this.estudiantes.splice(indice, 1)
+      })
+      .catch(err => {
+        message(
+          'Eliminar estudiante',
+          'Ha ocurrido un error eliminando el estudiante',
+          false
+        )
+      })
+  }
+
+  editar(estudiante: Estudiante, indice: number) {
+
+    const dialogRef = this.dialog
+      .open(FormularioEstudianteComponent, {
+        width: '50%',
+        height: 'auto',
+        data: estudiante
+      })
+
+    dialogRef
+      .afterClosed()
+      .subscribe(subs => {
+
+        if (!subs) {
+          return
+        }
+
+        this.estudiantes[indice] = {
+          ...subs,
+          dtmFechaCreacion: DateTime.local().toFormat('yyyy/LL/dd HH:mm')
+        }
       })
   }
 

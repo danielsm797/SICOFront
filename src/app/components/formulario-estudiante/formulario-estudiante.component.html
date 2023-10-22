@@ -1,0 +1,130 @@
+<div class="bg-gray-900">
+
+  <header class="bg-gray-800 border-b-2 border-gray-700 p-5">
+    <h1 class="font-light text-xl text-white">
+      {{isUpdate ? 'Actualizar' : 'Registrar'}} estudiante
+    </h1>
+  </header>
+
+  <div class="p-5">
+
+    <label class="text-white text-sm">
+      * Campos obligatorios
+    </label>
+
+    <form class="grid grid-cols-2 gap-3 mt-5" [formGroup]="frmEstudiante">
+
+      <div class="flex flex-col gap-1">
+
+        <label class="text-white font-light text-sm">
+          <span class="text-red-400 font-bold">*</span> Identificación
+        </label>
+
+        <input type='text' placeholder='Ingrese la identificación...' formControlName="identificacion"
+          class='bg-transparent text-white rounded-md border-2 border-gray-600 py-1 px-2 hover:border-violet-400 w-full' />
+
+        <label class="text-red-400 text-sm">
+          {{errorMessage('identificacion')}}
+        </label>
+
+      </div>
+
+      <div class="flex flex-col gap-1">
+
+        <label class="text-white font-light text-sm">
+          <span class="text-red-400 font-bold">*</span> Primer nombre
+        </label>
+
+        <input type='text' placeholder='Ingrese el primer nombre...' formControlName="primerNombre"
+          class='bg-transparent text-white rounded-md border-2 border-gray-600 py-1 px-2 hover:border-violet-400 w-full' />
+
+        <label class="text-red-400 text-sm">
+          {{errorMessage('primerNombre')}}
+        </label>
+
+      </div>
+
+      <div class="flex flex-col gap-1">
+
+        <label class="text-white font-light text-sm">
+          Segundo nombre
+        </label>
+
+        <input type='text' placeholder='Ingrese el segundo nombre...' formControlName="segundoNombre"
+          class='bg-transparent text-white rounded-md border-2 border-gray-600 py-1 px-2 hover:border-violet-400 w-full' />
+
+        <label class="text-red-400 text-sm">
+          {{errorMessage('segundoNombre')}}
+        </label>
+
+      </div>
+
+      <div class="flex flex-col gap-1">
+
+        <label class="text-white font-light text-sm">
+          <span class="text-red-400 font-bold">*</span> Primer apellido
+        </label>
+
+        <input type='text' placeholder='Ingrese el primer apellido...' formControlName="primerApellido"
+          class='bg-transparent text-white rounded-md border-2 border-gray-600 py-1 px-2 hover:border-violet-400 w-full' />
+
+        <label class="text-red-400 text-sm">
+          {{errorMessage('primerApellido')}}
+        </label>
+
+      </div>
+
+      <div class="flex flex-col gap-1">
+
+        <label class="text-white font-light text-sm">
+          <span class="text-red-400 font-bold">*</span> Segundo apellido
+        </label>
+
+        <input type='text' placeholder='Ingrese el segundo apellido...' formControlName="segundoApellido"
+          class='bg-transparent text-white rounded-md border-2 border-gray-600 py-1 px-2 hover:border-violet-400 w-full' />
+
+        <label class="text-red-400 text-sm">
+          {{errorMessage('segundoApellido')}}
+        </label>
+
+      </div>
+
+      <div class="flex flex-col gap-1">
+
+        <label class="text-white font-light text-sm">
+          <span class="text-red-400 font-bold">*</span> Email
+        </label>
+
+        <input type='email' placeholder='Ingrese el email...' formControlName="email"
+          class='bg-transparent text-white rounded-md border-2 border-gray-600 py-1 px-2 hover:border-violet-400 w-full' />
+
+        <label class="text-red-400 text-sm">
+          {{errorMessage('email')}}
+        </label>
+
+      </div>
+
+    </form>
+
+  </div>
+
+  <footer class="flex flex-row-reverse gap-2 p-5">
+
+    <button type="button" (click)="cerrar()"
+      class="bg-gray-800 rounded-md bg-gr-800 px-3 py-2 text-[0.8125rem] font-semibold text-white border-2 border-gray-800 hover:border-violet-300 hover:bg-violet-900">
+      Cerrar
+    </button>
+
+    <button type="button" (click)="limpiar()"
+      class="bg-gray-800 rounded-md bg-gr-800 px-3 py-2 text-[0.8125rem] font-semibold text-white border-2 border-gray-800 hover:border-violet-300 hover:bg-violet-900">
+      Reiniciar
+    </button>
+
+    <button type="button" (click)="prevSave()"
+      class="rounded-md bg-violet-800 px-3 py-2 text-[0.8125rem] font-semibold text-white border-2 border-violet-800 hover:border-violet-300 hover:bg-violet-900">
+      {{isUpdate ? 'Actualizar' : 'Registrar'}}
+    </button>
+
+  </footer>
+
+</div>

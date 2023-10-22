@@ -25,3 +25,13 @@ export type PostAsignarCurso = {
   idEstudiante: number,
   idCurso: number
 }
+
+export type PostRegistrarEstudiante = {
+  idEstudiante?: number,
+  strIdentificacion: string,
+  strPrimerNombre: string,
+  strSegundoNombre?: string,
+  strPrimerApellido: string,
+  strSegundoApellido: string,
+  strEmail: string
+}

@@ -6,10 +6,12 @@ import { MatTableModule } from '@angular/material/table'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatSelectModule } from '@angular/material/select'
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormularioEstudianteComponent } from './formulario-estudiante/formulario-estudiante.component';
 
 @NgModule({
   declarations: [
-    AsignacionCursoComponent
+    AsignacionCursoComponent,
+    FormularioEstudianteComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +22,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatSelectModule,
   ],
   exports: [
-    AsignacionCursoComponent
+    AsignacionCursoComponent,
+    FormularioEstudianteComponent
   ]
 })
 export class ComponentsModule { }
